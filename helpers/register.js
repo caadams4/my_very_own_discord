@@ -1,14 +1,11 @@
 import * as firebase from '../firebase';
 
-export let create_user = function (evt) {
-  let email = $("#regemail").val();
-  let username = $("#regdisplay").val();
-  let p1 = $("#regpass1").val();
-  let p2 = $("#regpass2").val();
+export let create_user = function (email,username,p1,p2) {
   if (check_user_already_exists(username) == true || check_passwords_match(p1, p2) == false) {
     return;
   }
-  create_user_in_database(username, email, p1);
+  fbauth = create_user_in_database(username, email, p1);
+  return fbauth;
 };
 
 
@@ -69,6 +66,5 @@ let create_user_in_database = function (username, password) {
   //renderUsersInServer(currentServer);
   //renderMessages(uid);
   //renderUsers();
-  $("#login_register_module").css({ "display": "none" });
-  $("#chat_module").css({ "display": "contents" });
+  return fbauth;
 };

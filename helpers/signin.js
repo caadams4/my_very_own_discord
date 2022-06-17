@@ -1,8 +1,6 @@
 import * as firebase from '../../firebase';
 
-export let sign_user_in = function (evt) {
-  email = $("#logemail").val();
-  let pwd = $("#logpass").val();
+export let sign_user_in = function (email,pwd) {
   fbauth.signInWithEmailAndPassword(auth, email, pwd).then(
     somedata => {
       console.log(somedata);
@@ -13,4 +11,5 @@ export let sign_user_in = function (evt) {
       console.log(errorCode);
       console.log(errorMessage);
     });
+    return fbauth;
 };
