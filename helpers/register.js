@@ -1,21 +1,23 @@
-import * as firebase from '../firebase';
+import * as firebase from '../firebase.js';
 
-export let create_user = function (email,username,p1,p2) {
-  if (check_user_already_exists(username) == true || check_passwords_match(p1, p2) == false) {
-    return;
-  }
-  fbauth = create_user_in_database(username, email, p1);
-  return fbauth;
+export function create_user (email,username,p1,p2,fb) {
+  //if (check_user_already_exists(username) == true || check_passwords_match(p1, p2) == false) {
+  //  return;
+  //}
+  console.log(p1);
+  console.log(p2);
+  let uid = create_user_in_database(username, email, p1,fb);
+  return uid;
 };
 
 
 let check_user_already_exists = function (username) {
   let userAlreadyExists;
-  existingUsers.forEach(user => {
+  /*existingUsers.forEach(user => {
     if (username === user.username) {
       userAlreadyExists = true;
     }
-  })
+  })*/
   if (userAlreadyExists === true) {
     alert("User already exists");
     return true;
@@ -32,11 +34,17 @@ let check_passwords_match = function (password1, password2) {
   return true;
 };
 
-let create_user_in_database = function (username, password) {
-  fbauth.createUserWithEmailAndPassword(auth, email, p1).then(somedata => {
-    uid = somedata.user.uid
-    currentServer = "General Chat";
-    currentChannel = "general";
+let create_user_in_database = function (username,email, password,fb) {
+  console.log(fb.fbauth)
+  console.log(fb.auth)
+    console.log(email)
+    console.log(password)
+  fb.fbauth.createUserWithEmailAndPassword(fb.auth, email, password).then(somedata => {
+    console.log(fb.auth);
+    console.log(fb.fbauth);
+    let uid = somedata.user.uid
+    let currentServer = "General Chat";
+    let currentChannel = "general";
     let newUser = {
       roles: {
         "user": true,
@@ -48,23 +56,22 @@ let create_user_in_database = function (username, password) {
       server: currentServer,
       channel: currentChannel
     }
-    let messageRef = rtdb.child(titleRef, `chatServers/-MmKuzfOiBRFV6EHOiWW/members/`);
-    rtdb.push(messageRef, { "uid": uid, "username": username })
-    let newUserRef = rtdb.ref(db, `/users/${uid}/`)
-    rtdb.set(newUserRef, newUser);
+    //let messageRef = fb.rtdb.child(fb.titleRef, `chatServers/-MmKuzfOiBRFV6EHOiWW/members/`);
+    //fb.rtdb.push(messageRef, { "uid": uid, "username": username })
+    let newUserRef = fb.rtdb.ref(fb.db, `/users/${uid}/`)
+    fb.rtdb.set(newUserRef, newUser);
+    return uid;
   }).catch(function (error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
+    console.log(error)
     console.log(errorCode);
     console.log(errorMessage);
   });
-  currentServer = "server1";
-  currentChannel = "general";
   //renderServers(currentServer);
   //renderChannels(currentChannel);
   //renderUsersInServer(currentServer);
   //renderMessages(uid);
   //renderUsers();
-  return fbauth;
 };

@@ -1,9 +1,10 @@
-import * as firebase from '../../firebase';
+import * as firebase from '../firebase.js';
 
-export let sign_user_in = function (email,pwd) {
-  fbauth.signInWithEmailAndPassword(auth, email, pwd).then(
+export function sign_user_in (email,pwd,firebaseObj) {
+  firebaseObj.fbauth.signInWithEmailAndPassword(firebaseObj.auth, email, pwd).then(
     somedata => {
       console.log(somedata);
+      return somedata.user.uid;
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -11,5 +12,4 @@ export let sign_user_in = function (email,pwd) {
       console.log(errorCode);
       console.log(errorMessage);
     });
-    return fbauth;
 };
