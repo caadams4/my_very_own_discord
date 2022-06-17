@@ -1,31 +1,47 @@
-import * as firebase from '../firebase';
-import { create_user } from './helpers/register';
-import { sign_user_in } from './helpers/signin';
 
-let email,password,username,password2;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
+import * as rtdb from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+import * as fbauth from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
+import {getAuth,signOut,} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
+import { firebaseConfig } from "./firebase.js";
+import { create_user } from "./helpers/register.js";
+import { sign_user_in } from "./helpers/signin.js";
 
 $(document).ready(function () {
+  const app = initializeApp(firebaseConfig);
+  let auth = fbauth.getAuth(app);
+  let db = rtdb.getDatabase(app);
+  let titleRef = rtdb.ref(db, "/");
+  let chatRef = rtdb.child(titleRef, "chatServers/");
+  let userRef = rtdb.child(titleRef, "users/");
+  let firebaseObj = { app, auth, db, titleRef, chatRef, userRef, rtdb, fbauth };
+  let email, password, username, password2, uid;
+  
+  $("#switch_2_register").on("click", function () {
+    $(".signin_parent").css({"display":"none"});
+    $(".register_parent").css({"display":"contents"});
+  });
+  
+  $("#switch_2_signin").on("click", function () {
+    $(".register_parent").css({"display":"none"});
+    $(".signin_parent").css({"display":"contents"});
+  });
 
-    $(".submit").submit(function () {
+  $(".submit_btn").on("click", function () {
+    console.log("bruh");
+    email = $("#email_signin").val();
+    password = $("#password_signin").val();
+    uid = sign_user_in(email, password, firebaseObj);
+    console.log(uid);
+  });
 
-        email = $("#email_signin").val();
-        password = $("#password_signin").val();
-        firebase.fbauth = sign_user_in(email,password);
-
-        console.log(firebase.fbauth);
-    });
-
-    $( "#register_user" ).submit(function( event ) {
-
-        email = $("#email_register").val();
-        password = $("#password_register").val();
-        password = $("#password2_register").val();
-        username = $("#username_register").val();
-
-        firebase.fbauth = create_user(email,username,password,password2);
-        
-
-
-        console.log(firebase.fbauth);
-      });
+  $(".register_btn").on("click", function () {
+    console.log(auth);
+    console.log(fbauth);
+    email = $("#email_register").val();
+    password = $("#password1_register").val();
+    password2 = $("#password2_register").val();
+    username = $("#username_register").val();
+    uid = create_user(email, username, password, password2, firebaseObj);
+  });
 });
