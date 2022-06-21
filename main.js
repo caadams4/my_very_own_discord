@@ -5,9 +5,11 @@ import {getAuth,signOut,} from "https://www.gstatic.com/firebasejs/9.0.2/firebas
 import { firebaseConfig } from "./firebase.js";
 import { create_user } from "./helpers/register.js";
 import { sign_user_in } from "./helpers/signin.js";
+import { render_servers } from "./helpers/render_app_data.js";
 
 $(document).ready(function () {
   const app = initializeApp(firebaseConfig);
+  let current_server = "General";
   let auth = fbauth.getAuth(app);
   let db = rtdb.getDatabase(app);
   let titleRef = rtdb.ref(db, "/");
@@ -27,6 +29,12 @@ $(document).ready(function () {
     fbauth,
   };
   let email, password, username, password2;
+  
+  window.onload = () => {
+    if (auth.currentUser.uid === null) {
+      $(".signin_parent").css({ display: "contents" });
+    }
+  }
 
   $("#switch_2_register").on("click", function () {
     $(".signin_parent").css({ display: "none" });
@@ -43,7 +51,6 @@ $(document).ready(function () {
     email = $("#email_signin").val();
     password = $("#password_signin").val();
     let uid = sign_user_in(email, password, firebase_object);
-    console.log(auth.uid);
   });
 
   $(".register_btn").on("click", function () {
@@ -75,11 +82,23 @@ $(document).ready(function () {
       let uid = auth.currentUser.uid;
       $(".register_parent").css({ display: "none" });
       $(".signin_parent").css({ display: "none" });
+      $(".dashboard_parent").css({ display: "contents" });
       console.log(auth.currentUser.uid);
     } else {
       let uid;
-      $(".register_parent").css({ display: "contents" });
+      $(".dashboard_parent").css({ display: "none" });
+      $(".register_parent").css({ display: "none" });
       $(".signin_parent").css({ display: "contents" });
     }
   });
+  
+ 
+  rtdb.onValue(chatRef,(server_data)=>{
+    render_servers(firebase_object,server_data,current_server);
+  });
+  
+  
 });
+
+
+// DASHBOARD @ https://codepen.io/abyeidengdit/pen/poaVGXG?editors=0010

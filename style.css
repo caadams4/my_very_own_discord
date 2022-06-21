@@ -1,8 +1,11 @@
 body {
-    background-color: #F3EBF6;
+    background-color: #000811;
     font-family: 'Ubuntu', sans-serif;
 }
 
+.signin_parent {
+  display:none;
+}
 .signin {
     background-color: #FFFFFF;
     width: 400px;
@@ -12,6 +15,9 @@ body {
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
 }
 .register_parent {
+  display:none;
+}
+.dashboard_parent {
   display:none;
 }
 .register {
@@ -25,7 +31,7 @@ body {
 
 .sign {
     padding-top: 40px;
-    color: #8C55AA;
+    color: #000811;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-size: 23px;
@@ -85,7 +91,7 @@ font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
     border-radius: 5em;
     color: #ffffff;
-    background: linear-gradient(to right, #9C27B0, #E040FB);
+    background:#000811;
     border: 0;
     padding-left: 40px;
     padding-right: 40px;
@@ -101,7 +107,7 @@ font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
     border-radius: 5em;
     color: #ffffff;
-    background: linear-gradient(to right, #9C27B0, #E040FB);
+    background: #000811;
     border: 0;
     padding-left: 40px;
     padding-right: 40px;
@@ -115,13 +121,13 @@ font-family: 'Ubuntu', sans-serif;
 
 .forgot {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #E1BEE7;
+    color: #9babf7;
     padding-top: 15px;
 }
 
 a {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #E1BEE7;
+    color: #b1bbe9;
     text-decoration: none
 }
 
@@ -131,4 +137,154 @@ a {
     }
 }
     
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+*,
+::after,
+::before {
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --bg-color: #000811;
+  --primary-color: #006ce0;
+  --border-radius: 6px;
+  --color: #2b82df;
+  /* --box-shadow: #0b488a 5px 0px 50px 0px; */
+}
+
+.sidebar_left {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  background: var(--bg-color);
+  transition: left 0.5s ease;
+  -webkit-transition: left 0.5s ease;
+  -moz-transition: left 0.5s ease;
+  -ms-transition: left 0.5s ease;
+  -o-transition: left 0.5s ease;
+}
+
+.sidebar_right {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  background: var(--bg-color);
+  transition: right 0.5s ease;
+  -webkit-transition: right 0.5s ease;
+  -moz-transition: right 0.5s ease;
+  -ms-transition: right 0.5s ease;
+  -o-transition: right 0.5s ease;
+}
+
+.sidebar_left ul {
+  list-style: none;
+  margin-top: 5rem;
+  height: 100%;
+}
+
+.sidebar_right ul {
+  list-style: none;
+  margin-top: 5rem;
+  height: 100%;
+}
+
+.sidebar_left ul li {
+  margin-top: 1rem;
+  padding: 0.3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar_right ul li {
+  margin-top: 1rem;
+  padding: 0.3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar_left ul li.active {
+  background: var(--primary-color);
+  border-bottom-left-radius: var(--border-radius);
+  border-top-left-radius: var(--border-radius);
+  transition: background 0.5s linear;
+  box-shadow: rgba(20, 114, 238, 0.918) 0px 2px 10px 0px;
+}
+
+.sidebar_right ul li.active {
+  background: var(--primary-color);
+  border-bottom-right-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  transition: background 0.5s linear;
+  box-shadow: rgba(20, 114, 238, 0.918) 0px 2px 10px 0px;
+}
+
+.sidebar_left li .icon {
+  margin-right: 1rem;
+  padding: 0.5rem;
+}
+
+.sidebar_right li .icon {
+  margin-left: 1rem;
+  padding: 0.5rem;
+}
+
+.sidebar_left li a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar_right li a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar_left li a:hover {
+  margin-left: 2px;
+}
+
+.sidebar_right li a:hover {
+  margin-right: 2px;
+}
+
+.close-icon {
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2.2rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.hamburger-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  font-size: 3rem;
+  color: #006ce0;
+  cursor: pointer;
+}
+
+body .toggle.sidebar_left {
+  left: -300px;
+}
+body.toggle.section {
+  margin-left: 0;
+  width: 100%;
+}
 

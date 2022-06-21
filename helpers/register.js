@@ -43,7 +43,6 @@ let create_user_in_database = function (username,email, password,fb) {
     console.log(fb.fbauth);
     let uid = somedata.user.uid
     let currentServer = "General Chat";
-    let currentChannel = "general";
     let newUser = {
       roles: {
         "user": true,
@@ -53,24 +52,15 @@ let create_user_in_database = function (username,email, password,fb) {
       email: email,
       lastActive: new Date().getTime(),
       server: currentServer,
-      channel: currentChannel
     }
-    //let messageRef = fb.rtdb.child(fb.titleRef, `chatServers/-MmKuzfOiBRFV6EHOiWW/members/`);
-    //fb.rtdb.push(messageRef, { "uid": uid, "username": username })
     let newUserRef = fb.rtdb.ref(fb.db, `/users/${uid}/`)
     fb.rtdb.set(newUserRef, newUser);
     return uid;
   }).catch(function (error) {
-    // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
     console.log(error)
     console.log(errorCode);
     console.log(errorMessage);
   });
-  //renderServers(currentServer);
-  //renderChannels(currentChannel);
-  //renderUsersInServer(currentServer);
-  //renderMessages(uid);
-  //renderUsers();
 };
