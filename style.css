@@ -144,10 +144,6 @@ a {
   margin: 0;
   box-sizing: border-box;
 }
-body {
-  font-family: "Lato", sans-serif;
-}
-
 :root {
   --bg-color: #000811;
   --primary-color: #006ce0;
@@ -156,7 +152,7 @@ body {
   /* --box-shadow: #0b488a 5px 0px 50px 0px; */
 }
 
-.sidebar {
+.sidebar_left {
   height: 100vh;
   position: fixed;
   top: 0;
@@ -169,13 +165,34 @@ body {
   -ms-transition: left 0.5s ease;
   -o-transition: left 0.5s ease;
 }
-.sidebar ul {
+
+.sidebar_right {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  background: var(--bg-color);
+  transition: right 0.5s ease;
+  -webkit-transition: right 0.5s ease;
+  -moz-transition: right 0.5s ease;
+  -ms-transition: right 0.5s ease;
+  -o-transition: right 0.5s ease;
+}
+
+.sidebar_left ul {
   list-style: none;
   margin-top: 5rem;
   height: 100%;
 }
 
-.sidebar ul li {
+.sidebar_right ul {
+  list-style: none;
+  margin-top: 5rem;
+  height: 100%;
+}
+
+.sidebar_left ul li {
   margin-top: 1rem;
   padding: 0.3rem;
   width: 100%;
@@ -184,7 +201,16 @@ body {
   position: relative;
 }
 
-.sidebar ul li.active {
+.sidebar_right ul li {
+  margin-top: 1rem;
+  padding: 0.3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar_left ul li.active {
   background: var(--primary-color);
   border-bottom-left-radius: var(--border-radius);
   border-top-left-radius: var(--border-radius);
@@ -192,19 +218,46 @@ body {
   box-shadow: rgba(20, 114, 238, 0.918) 0px 2px 10px 0px;
 }
 
-.sidebar li .icon {
+.sidebar_right ul li.active {
+  background: var(--primary-color);
+  border-bottom-right-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  transition: background 0.5s linear;
+  box-shadow: rgba(20, 114, 238, 0.918) 0px 2px 10px 0px;
+}
+
+.sidebar_left li .icon {
   margin-right: 1rem;
   padding: 0.5rem;
 }
-.sidebar li a {
+
+.sidebar_right li .icon {
+  margin-left: 1rem;
+  padding: 0.5rem;
+}
+
+.sidebar_left li a {
   text-decoration: none;
   font-size: 1.3rem;
   color: white;
   display: flex;
   align-items: center;
 }
-.sidebar li a:hover {
+
+.sidebar_right li a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar_left li a:hover {
   margin-left: 2px;
+}
+
+.sidebar_right li a:hover {
+  margin-right: 2px;
 }
 
 .close-icon {
@@ -227,7 +280,7 @@ body {
   cursor: pointer;
 }
 
-body .toggle.sidebar {
+body .toggle.sidebar_left {
   left: -300px;
 }
 body.toggle.section {

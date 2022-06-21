@@ -5,9 +5,11 @@ import {getAuth,signOut,} from "https://www.gstatic.com/firebasejs/9.0.2/firebas
 import { firebaseConfig } from "./firebase.js";
 import { create_user } from "./helpers/register.js";
 import { sign_user_in } from "./helpers/signin.js";
+import { render_servers } from "./helpers/render_app_data.js";
 
 $(document).ready(function () {
   const app = initializeApp(firebaseConfig);
+  let current_server = "General";
   let auth = fbauth.getAuth(app);
   let db = rtdb.getDatabase(app);
   let titleRef = rtdb.ref(db, "/");
@@ -49,7 +51,6 @@ $(document).ready(function () {
     email = $("#email_signin").val();
     password = $("#password_signin").val();
     let uid = sign_user_in(email, password, firebase_object);
-    console.log(auth.uid);
   });
 
   $(".register_btn").on("click", function () {
@@ -90,6 +91,13 @@ $(document).ready(function () {
       $(".signin_parent").css({ display: "contents" });
     }
   });
+  
+ 
+  rtdb.onValue(chatRef,(server_data)=>{
+    render_servers(firebase_object,server_data,current_server);
+  });
+  
+  
 });
 
 
