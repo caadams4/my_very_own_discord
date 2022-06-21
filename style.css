@@ -1,5 +1,5 @@
 body {
-    background-color: #F3EBF6;
+    background-color: #000811;
     font-family: 'Ubuntu', sans-serif;
 }
 
@@ -31,7 +31,7 @@ body {
 
 .sign {
     padding-top: 40px;
-    color: #8C55AA;
+    color: #000811;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-size: 23px;
@@ -91,7 +91,7 @@ font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
     border-radius: 5em;
     color: #ffffff;
-    background: linear-gradient(to right, #9C27B0, #E040FB);
+    background:#000811;
     border: 0;
     padding-left: 40px;
     padding-right: 40px;
@@ -107,7 +107,7 @@ font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
     border-radius: 5em;
     color: #ffffff;
-    background: linear-gradient(to right, #9C27B0, #E040FB);
+    background: #000811;
     border: 0;
     padding-left: 40px;
     padding-right: 40px;
@@ -121,13 +121,13 @@ font-family: 'Ubuntu', sans-serif;
 
 .forgot {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #E1BEE7;
+    color: #9babf7;
     padding-top: 15px;
 }
 
 a {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #E1BEE7;
+    color: #b1bbe9;
     text-decoration: none
 }
 
