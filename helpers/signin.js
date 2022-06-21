@@ -1,5 +1,3 @@
-import * as firebase from '../firebase.js';
-
 export function sign_user_in (email,pwd,firebaseObj) {
   firebaseObj.fbauth.signInWithEmailAndPassword(firebaseObj.auth, email, pwd).then(
     somedata => {

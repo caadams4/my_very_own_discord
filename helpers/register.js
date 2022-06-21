@@ -1,4 +1,4 @@
-import * as firebase from '../firebase.js';
+//import * as firebase from '../firebase.js';
 
 export function create_user (email,username,p1,p2,fb) {
   //if (check_user_already_exists(username) == true || check_passwords_match(p1, p2) == false) {
@@ -7,7 +7,6 @@ export function create_user (email,username,p1,p2,fb) {
   console.log(p1);
   console.log(p2);
   let uid = create_user_in_database(username, email, p1,fb);
-  return uid;
 };
 
 

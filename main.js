@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
 import * as rtdb from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
 import * as fbauth from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
@@ -14,25 +13,37 @@ $(document).ready(function () {
   let titleRef = rtdb.ref(db, "/");
   let chatRef = rtdb.child(titleRef, "chatServers/");
   let userRef = rtdb.child(titleRef, "users/");
-  let firebaseObj = { app, auth, db, titleRef, chatRef, userRef, rtdb, fbauth };
-  let email, password, username, password2, uid;
-  
+  if (auth.currentUser) {
+    let uid = auth.currentUser.uid;
+  }
+  let firebase_object = {
+    app,
+    auth,
+    db,
+    titleRef,
+    chatRef,
+    userRef,
+    rtdb,
+    fbauth,
+  };
+  let email, password, username, password2;
+
   $("#switch_2_register").on("click", function () {
-    $(".signin_parent").css({"display":"none"});
-    $(".register_parent").css({"display":"contents"});
+    $(".signin_parent").css({ display: "none" });
+    $(".register_parent").css({ display: "contents" });
   });
-  
+
   $("#switch_2_signin").on("click", function () {
-    $(".register_parent").css({"display":"none"});
-    $(".signin_parent").css({"display":"contents"});
+    $(".register_parent").css({ display: "none" });
+    $(".signin_parent").css({ display: "contents" });
   });
 
   $(".submit_btn").on("click", function () {
     console.log("bruh");
     email = $("#email_signin").val();
     password = $("#password_signin").val();
-    uid = sign_user_in(email, password, firebaseObj);
-    console.log(uid);
+    let uid = sign_user_in(email, password, firebase_object);
+    console.log(auth.uid);
   });
 
   $(".register_btn").on("click", function () {
@@ -42,6 +53,33 @@ $(document).ready(function () {
     password = $("#password1_register").val();
     password2 = $("#password2_register").val();
     username = $("#username_register").val();
-    uid = create_user(email, username, password, password2, firebaseObj);
+    let uid = create_user(
+      email,
+      username,
+      password,
+      password2,
+      firebase_object
+    );
+  });
+
+  $(".signout").on("click", function () {
+    fbauth.signOut(auth);
+  });
+
+  $(".showuid").on("click", function () {
+    console.log(auth.currentUser.uid);
+  });
+
+  fbauth.onAuthStateChanged(auth, (user) => {
+    if (user) {
+      let uid = auth.currentUser.uid;
+      $(".register_parent").css({ display: "none" });
+      $(".signin_parent").css({ display: "none" });
+      console.log(auth.currentUser.uid);
+    } else {
+      let uid;
+      $(".register_parent").css({ display: "contents" });
+      $(".signin_parent").css({ display: "contents" });
+    }
   });
 });
