@@ -15,8 +15,6 @@
   </head>
 
   <body>
-    <button class="signout">sign out</button>
-    <button class="showuid">log uid</button>
     <div class="signin_parent">
       <div class="signin">
         <p class="sign" align="center">Sign in</p>
@@ -35,12 +33,10 @@
             align="center"
             placeholder="Password"
           />
-          <a class="submit_btn" align="center">Sign in</a>
-          <p id="switch_2_register" class="forgot" align="center">
-            <a href="#" />Don't have an account? Register here.
-          </p>
-          <p id="forgt_password" class="forgot" align="center">
-            <a href="#" />Forgot Password?
+          <button class="submit_btn button" align="center">Sign in</button>
+          <p class="forgot" align="center">
+            <div class="linkish" id="switch_2_register">Don't have an account? Register here.</div>
+            <div class="linkish">Forgot Password?</div>
           </p>
         </form>
       </div>
@@ -78,33 +74,34 @@
             align="center"
             placeholder="Re-Enter Password"
           />
-          <a class="register_btn" align="center">Register</a>
-          <p id="switch_2_signin" class="forgot" align="center">
-            <a href="#" />Already have an account? Sign in here.
+          <button class="register_btn button" align="center">Register</button>
+        <p class="forgot" align="center">
+          <div class="linkish" id="switch_2_signin">Already have an account? Sign in here.</div>
           </p>
+        
         </form>
       </div>
     </div>
 
     <div class="dashboard_parent">
-      <div class="dashboard">
+      <button class="signout">sign out</button>
+      <div class="dashboard flex-container">
         <div class="sidebar_left" id="sidebars">
-          
-          <button class="signout">sign out</button>
-          <button class="showuid">log uid</button>
 
-          <ul class="servers">
-            
-          </ul>
-          
+          <ul class="servers"></ul>
         </div>
-        
-        <div class="sidebar_right">
+        <div class="message_pane flex-cont-master">
+          <ul class="messages"></ul>
+          <div class="flex-cont-row">
+            <input class="message_input" />
+            <div class="send">
+              <button class="button">send</button>
+            </div>
+          </div>
+        </div>
 
-          <ul class="users">
-            
-          </ul>
-          
+        <div class="sidebar_right">
+          <ul class="users"></ul>
         </div>
       </div>
     </div>
