@@ -1,14 +1,14 @@
-//import * as firebase from '../firebase.js';
+let firebase_object_here;
 
-export function create_user (email,username,p1,p2,fb) {
+export function create_user(email, username, p1, p2, firebase_object) {
+  
   //if (check_user_already_exists(username) == true || check_passwords_match(p1, p2) == false) {
   //  return;
   //}
-  console.log(p1);
-  console.log(p2);
-  let uid = create_user_in_database(username, email, p1,fb);
-};
-
+  let uid = create_user_in_database(username, email, p1, firebase_object);
+  console.log(uid);
+  return uid;
+}
 
 let check_user_already_exists = function (username) {
   let userAlreadyExists;
@@ -21,7 +21,7 @@ let check_user_already_exists = function (username) {
     alert("User already exists");
     return true;
   } else {
-    return false
+    return false;
   }
 };
 
@@ -33,34 +33,50 @@ let check_passwords_match = function (password1, password2) {
   return true;
 };
 
-let create_user_in_database = function (username,email, password,fb) {
-  console.log(fb.fbauth)
-  console.log(fb.auth)
-    console.log(email)
-    console.log(password)
-  fb.fbauth.createUserWithEmailAndPassword(fb.auth, email, password).then(somedata => {
-    console.log(fb.auth);
-    console.log(fb.fbauth);
-    let uid = somedata.user.uid
-    let currentServer = "General Chat";
-    let newUser = {
-      roles: {
-        "user": true,
-        "admin": false
-      },
-      name: username,
-      email: email,
-      lastActive: new Date().getTime(),
-      server: currentServer,
-    }
-    let newUserRef = fb.rtdb.ref(fb.db, `/users/${uid}/`)
-    fb.rtdb.set(newUserRef, newUser);
-    return uid;
-  }).catch(function (error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(error)
-    console.log(errorCode);
-    console.log(errorMessage);
-  });
+let create_user_in_database = function (
+  username,
+  email,
+  password,
+  firebase_object
+) {
+  console.log(firebase_object.fbauth);
+  console.log(firebase_object.auth);
+  console.log(email);
+  console.log(password);
+  firebase_object.fbauth
+    .createUserWithEmailAndPassword(firebase_object.auth, email, password)
+    .then((somedata) => {
+      console.log(firebase_object.auth);
+      console.log(firebase_object.fbauth);
+      let uid = somedata.user.uid;
+      let currentServer = "General";
+      let newUser = {
+        roles: {
+          user: true,
+          admin: false,
+        },
+        name: username,
+        email: email,
+        lastActive: new Date().getTime(),
+        server: currentServer,
+      };
+      let newUserRef = firebase_object.rtdb.ref(
+        firebase_object.db,
+        `/users/${uid}/`
+      );
+      firebase_object.rtdb.set(newUserRef, newUser);
+      let user = { username: username };
+      let addUserRef = firebase_object.rtdb.ref(
+        firebase_object.db,
+        `/chatServers/General/members/${uid}`
+      );
+      firebase_object.rtdb.set(addUserRef, user);
+    })
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(error);
+      console.log(errorCode);
+      console.log(errorMessage);
+    });
 };

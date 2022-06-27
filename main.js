@@ -8,21 +8,31 @@ import {
 import { firebaseConfig } from "./firebase.js";
 import { create_user } from "./helpers/register.js";
 import { sign_user_in } from "./helpers/signin.js";
-import { render_servers, render_messages } from "./helpers/render_app_data.js";
+import {
+  render_servers,
+  render_messages,
+  render_users,
+  get_user_server,
+  database_listen_for_change,
+  build_user_info,
+} from "./helpers/render_app_data.js";
 import { send_message } from "./helpers/messages.js";
+import { add_user, add_server } from "./helpers/administrative.js";
 
 $(document).ready(function () {
+  window.onload = () => {
+    if (auth.currentUser === null) {
+      $(".signin_parent").css({ display: "contents" });
+    }
+  };
+
   const app = initializeApp(firebaseConfig);
-  let current_server = "General";
+  let app_data;
   let auth = fbauth.getAuth(app);
   let db = rtdb.getDatabase(app);
   let titleRef = rtdb.ref(db, "/");
   let chatRef = rtdb.child(titleRef, "chatServers/");
   let userRef = rtdb.child(titleRef, "users/");
-  if (auth.currentUser) {
-    let uid = auth.currentUser.uid;
-  }
-
   let firebase_object = {
     app,
     auth,
@@ -34,12 +44,34 @@ $(document).ready(function () {
     fbauth,
   };
   let email, password, username, password2;
+  let user_info;
 
-  window.onload = () => {
-    if (auth.currentUser.uid === null) {
+  fbauth.onAuthStateChanged(auth, (user) => {
+    if (user) {
+      user_info = build_user_info(firebase_object);
+      database_listen_for_change(firebase_object, user_info);
+      console.log(user_info);
+      $(".register_parent").css({ display: "none" });
+      $(".signin_parent").css({ display: "none" });
+      let myUserRef = rtdb.ref(db, `/users/${user_info.uid}`);
+      username = rtdb.get(myUserRef).then((ss) => {
+        return ss.val().name;
+      });
+
+      $(".dashboard_parent").css({ display: "contents" });
+    } else {
+      user_info = {
+        uid: "",
+        username: "",
+        server: "",
+        role: "",
+      };
+      $(".admin_tools").css({ display: "none" });
+      $(".dashboard_parent").css({ display: "none" });
+      $(".register_parent").css({ display: "none" });
       $(".signin_parent").css({ display: "contents" });
     }
-  };
+  });
 
   $("#switch_2_register").on("click", function () {
     $(".signin_parent").css({ display: "none" });
@@ -52,12 +84,11 @@ $(document).ready(function () {
   });
 
   $(".submit_btn").on("click", function () {
-    console.log("bruh");
     email = $("#email_signin").val();
     $("#email_signin").empty();
     password = $("#password_signin").val();
     $("#password_signin").empty();
-    let uid = sign_user_in(email, password, firebase_object);
+    sign_user_in(email, password, firebase_object);
   });
 
   $(".register_btn").on("click", function () {
@@ -69,52 +100,35 @@ $(document).ready(function () {
     $("#password1_register").empty();
     $("#password2_register").empty();
     $("#username_register").empty();
-    let uid = create_user(
-      email,
-      username,
-      password,
-      password2,
-      firebase_object
-    );
+    create_user(email, username, password, password2, firebase_object);
   });
 
   $(".signout").on("click", function () {
     fbauth.signOut(auth);
   });
 
+  $("#add_serv_btn").on("click", function () {
+    let servername = $("#add_serv").val();
+    $("#add_serv").empty();
+    add_server(firebase_object, user_info.username, servername);
+  });
+
+  $("#add_user_btn").on("click", function () {
+    let username = $("#add_user_2_server").val();
+
+    $("#add_user_2_server").empty();
+    add_user(firebase_object, user_info, username);
+  });
+
   $(".send").on("click", function () {
-    console.log("sending message");
     let message = $(".message_input").val();
     $("#message_input").empty();
-    send_message(username, message, current_server, firebase_object);
-  });
-
-  fbauth.onAuthStateChanged(auth, (user) => {
-    if (user) {
-      let uid = auth.currentUser.uid;
-      rtdb.onValue(chatRef, (server_data) => {
-        render_servers(firebase_object, server_data, current_server);
-        render_messages(firebase_object, server_data, current_server);
-      });
-      $(".register_parent").css({ display: "none" });
-      $(".signin_parent").css({ display: "none" });
-      let myUserRef = rtdb.ref(db, `/users/${uid}`);
-      rtdb.get(myUserRef).then((ss) => {
-        username = ss.val().name;
-      });
-      $(".dashboard_parent").css({ display: "contents" });
-      console.log(auth.currentUser.uid);
-    } else {
-      let uid;
-      $(".dashboard_parent").css({ display: "none" });
-      $(".register_parent").css({ display: "none" });
-      $(".signin_parent").css({ display: "contents" });
-    }
-  });
-
-  rtdb.onValue(chatRef, (server_data) => {
-    render_servers(firebase_object, server_data, current_server);
-    render_messages(firebase_object, server_data, current_server);
+    send_message(
+      user_info.username,
+      message,
+      user_info.server,
+      firebase_object
+    );
   });
 });
 
