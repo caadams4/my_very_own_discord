@@ -184,8 +184,10 @@ function render_users(
       $(".users").append(`
           <li data-id=${renderUser}>
             <div class="user_list_item">
+            
               <a href="#">
-                ${renderUser}-Admin
+                <i class="fa fa-user-circle" title="Admin" ></i>
+                ${renderUser}
               </a>
             </div>
           </li>
@@ -263,7 +265,6 @@ function build_user_info(firebase_object, user_info) {
   firebase_object.rtdb.onValue(firebase_object.userRef, (user_data) => {
     let uid = firebase_object.auth.currentUser.uid;
     user_info.uid = uid;
-    console.log(uid);
     console.log(user_data.val()[uid]);
     user_info.username = current_server = user_data.val()[uid].name;
     user_info.server = current_server = user_data.val()[uid].server;
@@ -271,9 +272,11 @@ function build_user_info(firebase_object, user_info) {
       user_info.role = "admin";
       $(".admin_tools").css({ display: "contents" });
     } else {
+      console.log(user_data.val()[uid].roles["admin"])
       user_info.role = "user";
       $(".admin_tools").css({ display: "none" });
     }
+    console.log(user_info);
   });
   return user_info;
 }
