@@ -18,7 +18,84 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
-  <body>
+  <body>  
+    
+    <nav>
+      <div class="nav-header">
+        <div class="title-page">
+          Chat App
+        </div>  
+        <div id="signout" title="signout">
+          <i class="fa fa-sign-out signout fa-lg" aria-hidden="true"></i>
+        </div>
+      </div>
+    </nav>
+    
+    <div id="card">
+      <div class="dashboard_parent">
+        <div id="card_guts">
+            
+          <div class="sidebar_left" id="sidebars">
+            <div class="title">
+              Servers
+            </div>
+            <p class="admin_tools">
+              <div class="wrapper">
+                <div class="input_box_small">
+                  <input  id="add_serv"  type="text" placeholder="Add Server">
+                    <div class="autocomp-box"></div>
+                    <div class="icon">
+                      <i id="add_serv_btn" class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+              </div>
+            </p>
+            <ul class="servers">
+              <li  >
+                <a class="server_object" data-id="123" ></a>
+              </li><br/>
+            </ul>  
+          </div>
+          
+          
+          <div class="message_pane flex-cont-master">
+            <div class="messages">
+              <div data-id="123" class="message_not_from_me"></div>
+            </div>
+            <div class="message_bar">
+              <div class="wrapper">
+                <div  class="input_box_small">
+                  <input id="message_input" type="text">
+                    <div class="autocomp-box"></div>
+                    <div class="icon">
+                      <i id="send" class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          
+        <div class="sidebar_right">
+          <div class="title">
+            Users in Server
+            <p class="admin_tools">
+              <div class="wrapper">
+                <div id="add_user" class="input_box_small">
+                  <input id="add_user_2_server" type="text" placeholder="Add User">
+                    <div class="autocomp-box"></div>
+                    <div class="icon">
+                      <i id="add_user_btn" class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+              </div>
+            </p>
+          </div>
+          <ul class="users"></ul>
+        </div>  
+      </div>
+    
+    </div>
+        
     <div class="signin_parent">
       <div class="signin">
         <p class="sign" align="center">Sign in</p>
@@ -39,8 +116,7 @@
           />
           <button class="submit_btn button2" align="center">Sign in</button>
           <p class="forgot" align="center">
-            <div class="linkish" id="switch_2_register">Don't have an account? Register here.</div>
-            <div class="linkish">Forgot Password?</div>
+            <div class="linkish" id="switch_2_register">Don't have an account? Register here.</div><br><br>
           </p>
         </div>
       </div>
@@ -48,108 +124,44 @@
 
     <div class="register_parent">
       <div class="register">
-        <p class="sign" align="center">Register</p>
-        <div id="register_user">
-          <input
-            id="email_register"
-            class="input_box"
-            type="text"
-            align="center"
-            placeholder="Email"
-          />
-          <input
-            id="username_register"
-            class="input_box"
-            type="text"
-            align="center"
-            placeholder="Username"
-          />
-          <input
-            id="password1_register"
-            class="input_box"
-            type="password"
-            align="center"
-            placeholder="Password"
-          />
-          <input
-            id="password2_register"
-            class="input_box"
-            type="password"
-            align="center"
-            placeholder="Re-Enter Password"
-          />
-          <button class="register_btn button2" align="center">Register</button>
+      <p class="sign" align="center">Register</p>
+      <div id="register_user">
+        <input
+          id="email_register"
+          class="input_box"
+          type="text"
+          align="center"
+          placeholder="Email"
+        />
+        <input
+          id="username_register"
+          class="input_box"
+          type="text"
+          align="center"
+          placeholder="Username"
+        />
+        <input
+          id="password1_register"
+          class="input_box"
+          type="password"
+          align="center"
+          placeholder="Password"
+        />
+        <input
+          id="password2_register"
+          class="input_box"
+          type="password"
+          align="center"
+          placeholder="Re-Enter Password"
+        />
+        <button class="register_btn button2" align="center">Register</button>
         <p class="forgot" align="center">
-          <div class="linkish" id="switch_2_signin">Already have an account? Sign in here.</div>
-          </p>
-        
-        </div>
+          <div class="linkish" id="switch_2_signin">Already have an account? Sign in here.</div><br><br>
+        </p>
+      </div>
       </div>
     </div>
 
-    <div class="dashboard_parent">
-      <button class="signout">sign out</button>
-      <div class="dashboard flex-container">
-        <div class="sidebar_left" id="sidebars">
-          <div class="title">
-            Servers
-          </div>
-          <p class="admin_tools">
-            <br/><br/>
-          <input
-            id="add_serv"
-            class="input_box_small"
-            margin="auto"
-            placeholder="Add Server"
-          />
-          <button
-            id="add_serv_btn"
-            class="button">
-            Add Serv
-          </button>
-          </p>
-          <ul class="servers">
-            <li  >
-              <a class="server_object" data-id="123" ></a>
-            </li><br/>
-          </ul>
-
-          
-        </div>
-        <div class="message_pane flex-cont-master">
-          <div class="messages">
-            <div data-id="123" class="message_not_from_me">
-            </div>
-          </div>
-          <div class="flex-cont-row">
-            <input class="message_input" />
-            <div class="send">
-              <button class="button">send</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="sidebar_right">
-          <div class="title">
-            Users in Server
-          <p class="admin_tools">
-            <br/><br/>
-          <input
-            id="add_user_2_server"
-             class="input_box_small"
-            margin="auto"
-            placeholder="Add User"
-          />
-          <button
-            id="add_user_btn"
-            class="button">
-            Add User
-          </button>
-          </p>
-          </div>
-          <ul class="users"></ul>
-        </div>
-      </div>
-      </div>
-  </body>
+  </div>        
+</body>
 </html>

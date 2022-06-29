@@ -26,6 +26,8 @@ $(document).ready(function () {
     }
   };
 
+ 
+  
   const app = initializeApp(firebaseConfig);
   let app_data;
   let auth = fbauth.getAuth(app);
@@ -120,8 +122,8 @@ $(document).ready(function () {
     add_user(firebase_object, user_info, username);
   });
 
-  $(".send").on("click", function () {
-    let message = $(".message_input").val();
+  $("#send").on("click", function () {
+    let message = $("#message_input").val();
     $("#message_input").empty();
     send_message(
       user_info.username,
@@ -131,5 +133,3 @@ $(document).ready(function () {
     );
   });
 });
-
-// DASHBOARD @ https://codepen.io/abyeidengdit/pen/poaVGXG?editors=0010

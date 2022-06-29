@@ -82,25 +82,26 @@ function render_messages(firebase_object, server_data_raw, current_server) {
         `<div class="message_from_me_parent">
           <div data-id='${each_message}' id='${each_message}' class="message_from_me">
             <div class="message_details">
-              ${server_data[current_server].messages[each_message].senderName}
-            </div>
+              ${server_data[current_server].messages[each_message].timeStamp}
+            </div>\
+            <hr style="white" margin="6">
             ${server_data[current_server].messages[each_message].message}
             <div class="message_details">
-              At ${server_data[current_server].messages[each_message].timeStamp}
+              @${server_data[current_server].messages[each_message].senderName}
             </div>
-          </div>
         </div>`
       );
     } else {
       $(".messages").append(
         `<div data-id='${each_message}' class="message_not_from_me">
-          <div class="message_details">
-            ${server_data[current_server].messages[each_message].senderName}
-          </div>
-          ${server_data[current_server].messages[each_message].message}
-          <div class="message_details">
-            At ${server_data[current_server].messages[each_message].timeStamp}
-          </div>
+            <div class="message_details">
+              ${server_data[current_server].messages[each_message].timeStamp}
+            </div>\
+            <hr style="white" margin="6">
+            ${server_data[current_server].messages[each_message].message}
+            <div class="message_details">
+              @${server_data[current_server].messages[each_message].senderName}
+            </div>
         </div>`
       );
     }
@@ -127,8 +128,10 @@ function render_users(
       $(".users").append(`
           <li data-id=${renderUser}>
             <div class="user_list_item">
+              
               <a href="#">
-                ${renderUser}-Admin
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+                ${renderUser}
               </a>
          	    <div class="edit">
               <a href="#">
