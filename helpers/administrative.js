@@ -46,6 +46,12 @@ function add_server(firebase_object, username, servername) {
     console.log(errorCode);
     console.log(errorMessage);
   });
+  
+  addServerRef = firebase_object.rtdb.ref(
+    firebase_object.db,
+    `/servers/`
+  );
+  firebase_object.rtdb.push(addServerRef,servername)
 }
 
 function add_user(firebase_object, user_info, username_2_add) {

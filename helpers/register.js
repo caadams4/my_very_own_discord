@@ -1,7 +1,6 @@
 let firebase_object_here;
 
 export function create_user(email, username, p1, p2, firebase_object) {
-  
   //if (check_user_already_exists(username) == true || check_passwords_match(p1, p2) == false) {
   //  return;
   //}
@@ -71,6 +70,16 @@ let create_user_in_database = function (
         `/chatServers/General/members/${uid}`
       );
       firebase_object.rtdb.set(addUserRef, user);
+
+      // add to user group
+      let user_group_ref = firebase_object.rtdb.ref(
+        firebase_object.db,
+        `/groups/users/${uid}`
+      );
+      let user_group = {
+        username,
+      };
+      firebase_object.rtdb.set(user_group_ref, user_group);
     })
     .catch(function (error) {
       var errorCode = error.code;
